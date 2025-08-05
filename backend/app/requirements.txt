@@ -5,3 +5,4 @@ seleniumbase
 bs4
 python-dotenv
 requests
+pydantic-settings
