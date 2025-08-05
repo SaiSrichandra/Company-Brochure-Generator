@@ -9,6 +9,14 @@ class BrochureRequest(BaseModel):
     company_name: str
     url: HttpUrl
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://company-brochure-generator.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @router.post("/generate-brochure")
 def generate_brochure(req: BrochureRequest):
     try:
