@@ -7,7 +7,7 @@ router = APIRouter()
 
 class BrochureRequest(BaseModel):
     company_name: str
-    url: HttpUrl
+    url: str
 
 @router.post("/generate-brochure")
 def generate_brochure(req: BrochureRequest):
