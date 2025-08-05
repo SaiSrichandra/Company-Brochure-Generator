@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function BrochureForm() {
   const [companyName, setCompanyName] = useState('');
   const [url, setUrl] = useState('');
@@ -39,7 +41,7 @@ function BrochureForm() {
     startProgressBar(125000); // estimate 25s duration
 
     try {
-      const res = await fetch("http://localhost:8000/generate-brochure", {
+      const res = await fetch(`${API_BASE_URL}/generate-brochure`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ company_name: companyName, url })
