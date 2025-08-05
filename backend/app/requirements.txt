@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+openai
+seleniumbase
+bs4
+python-dotenv
+requests

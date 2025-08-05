@@ -1,0 +1,40 @@
+# === PYTHON / BACKEND ===
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+.env
+venv/
+.env.*
+
+# Poetry or pipenv (optional)
+poetry.lock
+Pipfile.lock
+
+# FastAPI static cache (if any)
+app/static/
+
+# VSCode or PyCharm project files
+.vscode/
+.idea/
+
+# === NODE / FRONTEND ===
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Vite output
+frontend/.vite/
+frontend/.cache/
+
+# === SYSTEM FILES ===
+.DS_Store
+Thumbs.db
+*.swp
+
+# === OS-Specific ===
+*.bak
+*.tmp
