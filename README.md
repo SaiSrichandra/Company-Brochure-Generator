@@ -10,7 +10,7 @@ Perfect for startups, marketing agencies, or anyone who needs to generate brande
 
 - 🔍 Crawls the important pages of a company’s website
 - 🧠 Uses AI to extract and summarize what the company does
-- 📄 Generates a sleek brochure in Markdown format
+- 📄 Generates an elegant brochure in Markdown format
 - 💻 Displays the result in a beautiful dark-themed frontend
 - 🚀 Designed to be fast, secure, and production-ready
 
