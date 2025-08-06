@@ -58,6 +58,8 @@ Example output : {
     
     def user_prompt(self):
         u_con = f"The company with name {self.company_name} has the following links in its website:\n"
+        if not self.links:
+            self.links = [{"type": "Homepage" , "url" : self.url}]
         u_con += str(self.links)
         u_con += "\nPlease filter these links and give me the links which are useful to obtain information about the company and the output should be in the form of a JSON"
         up = {"role" : "user", "content" : u_con}
@@ -139,6 +141,11 @@ class AIBrochure():
 def generate_brochure_text(company_name, url):
     client = OpenAI(api_key=settings.OPENAI_API_KEY)
     links = Links(url, company_name, client).extract_useful_links()
-    complete_desc = ExploreLinks(json.loads(links)["links"]).explore_links()
+    if len(json.loads(links)["links"]) > 0:
+        give_link = json.loads(links)["links"]
+    else:
+        give_link = [{"type":"Homepage","url":str(url)}]
+
+    complete_desc = ExploreLinks(give_link).explore_links()
     return AIBrochure(complete_desc, company_name, client).generate_brochure()
 
