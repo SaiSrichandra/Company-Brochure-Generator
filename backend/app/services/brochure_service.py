@@ -77,7 +77,10 @@ class ExploreLinks():
             sb.driver.uc_open_with_reconnect(url)
             sb.wait_for_element("body", timeout=2)
             page_text = sb.get_text("body")
-            complete_description += (page_text + '\n\n')
+            if page_text:
+                complete_description += (page_text + '\n\n')
+            else:
+                complete_description += 'No details found on this link\n\n'
         return complete_description
 
     def explore_links(self):
@@ -123,8 +126,12 @@ class AIBrochure():
         return sp
     
     def user_prompt(self):
+        if self.desc is not None:
+            desc_in = self.desc
+        else:
+            desc_in = 'Cannot scrape any details fromt this company'
         u_con = f"The name of company is {self.company_name} and has the following description:\n"
-        u_con += self.desc
+        u_con += desc_in
         u_con += "\n Please create an elegant company brochure with suitable headings and layout and provide an output in the form of Markdown\n"
         up = {"role" : "user", "content" : u_con}
         return up
