@@ -8,7 +8,7 @@ Perfect for startups, marketing agencies, or anyone who needs to generate brande
 
 ## Live Demo
 
-> **Note:** The currently deployed version runs on Render's free tier (512 MB RAM), which severely limits resources. Because of this, Chrome/Selenium runs in a minimal configuration — sequential scraping, no parallel processing, and basic headless mode. On a local machine or a more powerful server, the app runs with its full capabilities including undetected Chrome mode and parallel page scraping via multiprocessing.
+> **Note:** The currently deployed version runs on Render's free tier (512 MB RAM), which severely limits resources. Because of this, Chrome/Selenium runs in a minimal configuration - sequential scraping, no parallel processing, and basic headless mode. On a local machine or a more powerful server, the app runs with its full capabilities including undetected Chrome mode and parallel page scraping via multiprocessing.
 
 ---
 
@@ -109,53 +109,3 @@ cd backend
 docker build -t ai-brochure .
 docker run -p 8080:8080 -e OPENAI_API_KEY=your_key_here ai-brochure
 ```
-
----
-
-## Project Structure
-
-```
-AIBrochure/
-├── backend/
-│   ├── Dockerfile
-│   └── app/
-│       ├── main.py                 # FastAPI app entry point
-│       ├── requirements.txt
-│       ├── api/
-│       │   ├── auth.py             # Register & login endpoints
-│       │   ├── brochure.py         # Brochure generation endpoint
-│       │   └── dashboard.py        # Saved brochures CRUD
-│       ├── core/
-│       │   ├── config.py           # Settings (keys, DB URL, JWT config)
-│       │   ├── database.py         # SQLAlchemy engine & session
-│       │   └── security.py         # JWT & password utilities
-│       ├── models/
-│       │   └── user.py             # User & Brochure DB models
-│       └── services/
-│           └── brochure_service.py # Scraping & AI brochure logic
-└── frontend/
-    ├── index.html
-    ├── package.json
-    ├── vite.config.js
-    └── src/
-        ├── App.jsx                 # Main app with auth gating
-        ├── index.css               # Dark theme styles
-        ├── main.jsx
-        └── components/
-            ├── AuthForm.jsx        # Login / Register form
-            ├── BrochureForm.jsx    # Company URL input & result
-            └── Dashboard.jsx       # Saved brochures list
-```
-
----
-
-## Design
-
-Dark mode theme with:
-- Background: `#4e4eb7`
-- Container: `#2a2a3f`
-- Inputs: `#1a1a28`
-- Accent: `#4f46e5` / `#00f2ff`
-- Font: Inter
-
----
