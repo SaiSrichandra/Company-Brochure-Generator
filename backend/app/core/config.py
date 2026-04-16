@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str
 
     # CORS
-    BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000"]  # Frontend origin(s)
+    BACKEND_CORS_ORIGINS: list[str] = ["*"]  # Frontend origin(s)
 
     # JWT
     SECRET_KEY: str = "change-this-to-a-random-secret-key"
