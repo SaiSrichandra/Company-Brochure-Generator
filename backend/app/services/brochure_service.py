@@ -17,7 +17,7 @@ class Links():
         self.links = []
         soup = BeautifulSoup(requests.get(url).content, 'html.parser')
         self.title = soup.title.string if soup.title else ''
-        with SB(uc=True, test=True, locale="en-US", headless2=True) as sb:
+        with SB(uc=True, test=True, locale="en-US", headless2=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage") as sb:
             sb.driver.uc_open_with_reconnect(url)
             sb.wait_for_element("body", timeout=2)
             page_text = sb.get_text("body")
@@ -75,7 +75,7 @@ class ExploreLinks():
         soup = BeautifulSoup(requests.get(url_obj['url']).content, 'html.parser')
         title = soup.title.string if soup.title else ''
         complete_description += (title + '\n\n')
-        with SB(uc=True, test=True, locale="en-US", headless2=True) as sb:
+        with SB(uc=True, test=True, locale="en-US", headless2=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage") as sb:
             sb.driver.uc_open_with_reconnect(url)
             sb.wait_for_element("body", timeout=2)
             page_text = sb.get_text("body")
