@@ -6,8 +6,18 @@ import json
 from dotenv import load_dotenv
 from app.core.config import settings
 from multiprocessing import Pool, cpu_count
+import os
 
 load_dotenv()
+
+IS_DOCKER = os.path.exists('/.dockerenv') or os.environ.get('RENDER', False)
+
+def get_sb():
+    """Return SB context manager with container-safe settings."""
+    if IS_DOCKER:
+        return SB(headless=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--single-process")
+    else:
+        return SB(uc=True, test=True, locale="en-US", headless2=True)
 
 class Links():
     def __init__(self, url, name, client):
@@ -17,9 +27,9 @@ class Links():
         self.links = []
         soup = BeautifulSoup(requests.get(url).content, 'html.parser')
         self.title = soup.title.string if soup.title else ''
-        with SB(uc=True, test=True, locale="en-US", headless2=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage") as sb:
-            sb.driver.uc_open_with_reconnect(url)
-            sb.wait_for_element("body", timeout=2)
+        with get_sb() as sb:
+            sb.open(url)
+            sb.wait_for_element("body", timeout=10)
             page_text = sb.get_text("body")
             self.text = page_text
             all_links = sb.find_elements("a")
@@ -75,9 +85,9 @@ class ExploreLinks():
         soup = BeautifulSoup(requests.get(url_obj['url']).content, 'html.parser')
         title = soup.title.string if soup.title else ''
         complete_description += (title + '\n\n')
-        with SB(uc=True, test=True, locale="en-US", headless2=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage") as sb:
-            sb.driver.uc_open_with_reconnect(url)
-            sb.wait_for_element("body", timeout=2)
+        with get_sb() as sb:
+            sb.open(url)
+            sb.wait_for_element("body", timeout=10)
             page_text = sb.get_text("body")
             if page_text:
                 complete_description += (page_text + '\n\n')
