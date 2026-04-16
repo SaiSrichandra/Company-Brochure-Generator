@@ -65,8 +65,8 @@ The app automatically detects the environment and adapts:
 
 | Environment        | Chrome Mode                          | Scraping        | Timeouts |
 |--------------------|--------------------------------------|-----------------|----------|
-| **Local**          | Undetected Chrome (`uc=True`)        | Parallel (Pool) | 15s      |
-| **Docker / Render**| Standard headless + sandbox disabled | Sequential      | 25-35s   |
+| **Local**          | Undetected Chrome (`uc=True`)        | Parallel (Pool) | 10s      |
+| **Docker / Render**| Standard headless + sandbox disabled | Sequential      | 35-45s   |
 
 On resource-constrained servers (like Render free tier), the app:
 - Uses regular headless Chrome instead of undetected mode
