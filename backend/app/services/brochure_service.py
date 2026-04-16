@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from app.core.config import settings
 from multiprocessing import Pool, cpu_count
 import os
+import traceback
 
 load_dotenv()
 
@@ -15,7 +16,7 @@ IS_DOCKER = os.path.exists('/.dockerenv') or os.environ.get('RENDER', False)
 def get_sb():
     """Return SB context manager with container-safe settings."""
     if IS_DOCKER:
-        return SB(headless=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--single-process")
+        return SB(headless=True, chromium_arg="--no-sandbox,--disable-dev-shm-usage,--disable-gpu")
     else:
         return SB(uc=True, test=True, locale="en-US", headless2=True)
 
@@ -25,18 +26,36 @@ class Links():
         self.company_name = name
         self.client = client
         self.links = []
-        soup = BeautifulSoup(requests.get(url).content, 'html.parser')
+        soup = BeautifulSoup(requests.get(url, timeout=15).content, 'html.parser')
         self.title = soup.title.string if soup.title else ''
-        with get_sb() as sb:
-            sb.open(url)
-            sb.wait_for_element("body", timeout=10)
-            page_text = sb.get_text("body")
-            self.text = page_text
-            all_links = sb.find_elements("a")
-            for link in all_links:
-                href = link.get_attribute("href")
-                if href:
-                    self.links.append(href)
+        if IS_DOCKER:
+            try:
+                with get_sb() as sb:
+                    sb.open(url)
+                    sb.wait_for_element("body", timeout=10)
+                    page_text = sb.get_text("body")
+                    self.text = page_text
+                    all_links = sb.find_elements("a")
+                    for link in all_links:
+                        href = link.get_attribute("href")
+                        if href:
+                            self.links.append(href)
+            except Exception as e:
+                print(f"SeleniumBase error: {e}")
+                self.text = soup.get_text()
+                for a in soup.find_all('a', href=True):
+                    self.links.append(a['href'])
+        else:
+            with SB(uc=True, test=True, locale="en-US", headless2=True) as sb:
+                sb.driver.uc_open_with_reconnect(url)
+                sb.wait_for_element("body", timeout=2)
+                page_text = sb.get_text("body")
+                self.text = page_text
+                all_links = sb.find_elements("a")
+                for link in all_links:
+                    href = link.get_attribute("href")
+                    if href:
+                        self.links.append(href)
     
     def extract_useful_links(self):
         prompt_list = self.create_prompts()
@@ -82,25 +101,46 @@ class ExploreLinks():
     def scrape_single_link(self, url_obj):
         complete_description = ''
         url = url_obj['url']
-        soup = BeautifulSoup(requests.get(url_obj['url']).content, 'html.parser')
-        title = soup.title.string if soup.title else ''
-        complete_description += (title + '\n\n')
-        with get_sb() as sb:
-            sb.open(url)
-            sb.wait_for_element("body", timeout=10)
-            page_text = sb.get_text("body")
-            if page_text:
-                complete_description += (page_text + '\n\n')
-            else:
-                complete_description += 'No details found on this link\n\n'
+        if IS_DOCKER:
+            try:
+                soup = BeautifulSoup(requests.get(url, timeout=15).content, 'html.parser')
+                title = soup.title.string if soup.title else ''
+                complete_description += (title + '\n\n')
+                with get_sb() as sb:
+                    sb.open(url)
+                    sb.wait_for_element("body", timeout=10)
+                    page_text = sb.get_text("body")
+                    if page_text:
+                        complete_description += (page_text + '\n\n')
+                    else:
+                        complete_description += 'No details found on this link\n\n'
+            except Exception as e:
+                print(f"Error scraping {url}: {e}")
+                complete_description += f'Failed to scrape this page\n\n'
+        else:
+            soup = BeautifulSoup(requests.get(url_obj['url']).content, 'html.parser')
+            title = soup.title.string if soup.title else ''
+            complete_description += (title + '\n\n')
+            with SB(uc=True, test=True, locale="en-US", headless2=True) as sb:
+                sb.driver.uc_open_with_reconnect(url)
+                sb.wait_for_element("body", timeout=2)
+                page_text = sb.get_text("body")
+                if page_text:
+                    complete_description += (page_text + '\n\n')
+                else:
+                    complete_description += 'No details found on this link\n\n'
         return complete_description
 
     def explore_links(self):
-        final_description = ''
-        with Pool(processes=min(len(self.links), cpu_count() - 1)) as pool:
-            results = pool.map(self.scrape_single_link, self.links)
-        final_description = '\n'.join(results)
-        return final_description
+        if IS_DOCKER:
+            results = []
+            for link_obj in self.links:
+                results.append(self.scrape_single_link(link_obj))
+            return '\n'.join(results)
+        else:
+            with Pool(processes=min(len(self.links), cpu_count() - 1)) as pool:
+                results = pool.map(self.scrape_single_link, self.links)
+            return '\n'.join(results)
 
 class AIBrochure():
     def __init__(self, desc, company_name, client):
