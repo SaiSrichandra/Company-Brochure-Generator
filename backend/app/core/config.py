@@ -12,6 +12,14 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3000"]  # Frontend origin(s)
 
+    # JWT
+    SECRET_KEY: str = "change-this-to-a-random-secret-key"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
+    # SQLite DB path
+    DATABASE_URL: str = "sqlite:///./brochure.db"
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

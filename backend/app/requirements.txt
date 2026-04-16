@@ -6,3 +6,7 @@ bs4
 python-dotenv
 requests
 pydantic-settings
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart

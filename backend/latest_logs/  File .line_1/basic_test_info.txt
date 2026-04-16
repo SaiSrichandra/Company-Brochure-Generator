@@ -1,0 +1,91 @@
+page_actions.py:1:SB
+--------------------------------------------------------------------
+Last Page: [WARNING! Browser Not Open!]
+ Duration: 8.65s
+  Browser: Chrome 147.0.7727.57 / headless2
+   Driver: chromedriver 147.0.7727.57
+Timestamp: 1776311481  (Unix Timestamp)
+     Date: Wednesday, April 15, 2026
+     Time: 11:51:21 PM  (Eastern Daylight Time, UTC-04:00)
+--------------------------------------------------------------------
+Traceback:
+  Traceback (most recent call last):
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\seleniumbase\core\browser_launcher.py", line 521, in uc_open_with_reconnect
+    page_actions.switch_to_window(
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\seleniumbase\fixtures\page_actions.py", line 1537, in switch_to_window
+    __switch_to_window(driver, window_handle, uc_lock=uc_lock)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\seleniumbase\fixtures\page_actions.py", line 1480, in __switch_to_window
+    driver.switch_to.window(window_handle)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\switch_to.py", line 130, in window
+    self._w3c_window(window_name)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\switch_to.py", line 138, in _w3c_window
+    send_handle(window_name)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\switch_to.py", line 134, in send_handle
+    self._driver.execute(Command.SWITCH_TO_WINDOW, {"handle": h})
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=147.0.7727.57)
+Stacktrace:
+	uc_driver!GetHandleVerifier [0x7ff71ef20245+146d5]
+	uc_driver!GetHandleVerifier [0x7ff71ef202b0+14740]
+	uc_driver!(No symbol) [0x7ff71ec8d7cd]
+	uc_driver!(No symbol) [0x7ff71ec7713f]
+	uc_driver!(No symbol) [0x7ff71ec781ff]
+	uc_driver!(No symbol) [0x7ff71ec8e343]
+	uc_driver!(No symbol) [0x7ff71ec63811]
+	uc_driver!(No symbol) [0x7ff71ed227df]
+	uc_driver!(No symbol) [0x7ff71ecd9018]
+	uc_driver!(No symbol) [0x7ff71ecd9f03]
+	uc_driver!GetHandleVerifier [0x7ff71f2358f9+329d89]
+	uc_driver!GetHandleVerifier [0x7ff71f22fe46+3242d6]
+	uc_driver!GetHandleVerifier [0x7ff71f2530b2+347542]
+	uc_driver!GetHandleVerifier [0x7ff71ef3d3d5+31865]
+	uc_driver!GetHandleVerifier [0x7ff71ef4600c+3a49c]
+	uc_driver!GetHandleVerifier [0x7ff71ef29634+1dac4]
+	uc_driver!GetHandleVerifier [0x7ff71ef297e6+1dc76]
+	uc_driver!GetHandleVerifier [0x7ff71ef0e2f7+2787]
+	KERNEL32!BaseThreadInitThunk [0x7fff53e8e8d7+17]
+	ntdll!RtlUserThreadStart [0x7fff5466c48c+2c]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\saisr\Documents\LLM Engg Projs\AIBrochure\backend\app\services\brochure_service.py", line 79, in scrape_single_link
+    sb.driver.uc_open_with_reconnect(url)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\seleniumbase\core\browser_launcher.py", line 5502, in <lambda>
+    lambda *args, **kwargs: uc_open_with_reconnect(
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\seleniumbase\core\browser_launcher.py", line 527, in uc_open_with_reconnect
+    driver, driver.window_handles[-1], 2
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\seleniumbase\undetected\__init__.py", line 348, in __getattribute__
+    return super().__getattribute__(item)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\webdriver.py", line 628, in window_handles
+    return self.execute(Command.W3C_GET_WINDOW_HANDLES)["value"]
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\saisr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
+Stacktrace:
+	uc_driver!GetHandleVerifier [0x7ff71ef20245+146d5]
+	uc_driver!GetHandleVerifier [0x7ff71ef202b0+14740]
+	uc_driver!(No symbol) [0x7ff71ec8d5b6]
+	uc_driver!(No symbol) [0x7ff71ecd8093]
+	uc_driver!(No symbol) [0x7ff71ed0fe72]
+	uc_driver!(No symbol) [0x7ff71ed0a0d1]
+	uc_driver!(No symbol) [0x7ff71ed09383]
+	uc_driver!(No symbol) [0x7ff71ec560b5]
+	uc_driver!GetHandleVerifier [0x7ff71f2358f9+329d89]
+	uc_driver!GetHandleVerifier [0x7ff71f22fe46+3242d6]
+	uc_driver!GetHandleVerifier [0x7ff71f2530b2+347542]
+	uc_driver!GetHandleVerifier [0x7ff71ef3d3d5+31865]
+	uc_driver!GetHandleVerifier [0x7ff71ef4600c+3a49c]
+	uc_driver!(No symbol) [0x7ff71ec54e4a]
+	uc_driver!GetHandleVerifier [0x7ff71f3920c8+486558]
+	KERNEL32!BaseThreadInitThunk [0x7fff53e8e8d7+17]
+	ntdll!RtlUserThreadStart [0x7fff5466c48c+2c]
+

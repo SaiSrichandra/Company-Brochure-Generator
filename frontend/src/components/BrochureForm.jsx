@@ -43,7 +43,11 @@ function BrochureForm() {
     try {
       const res = await fetch(`${API_BASE_URL}/generate-brochure`, {
         method: "POST",
-        headers: {'Content-Type': 'application/json','ngrok-skip-browser-warning': 'true'},
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify({ company_name: companyName, url })
       });
 
